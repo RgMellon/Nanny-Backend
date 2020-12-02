@@ -1,7 +1,7 @@
 import Petshop from '../models/Petshop';
 import * as Yup from 'yup';
 
-import { verifyIsOpen } from '../aux/verifyIsOpen';
+import { verifyIsOpen } from '../helper/verifyIsOpen';
 
 class PetshopsController {
   async store(req, res) {
@@ -62,7 +62,7 @@ class PetshopsController {
 
     const parse = JSON.parse(str);
 
-    const petshops = parse.map(item => ({
+    const petshops = parse.map((item) => ({
       ...item,
       isOpen: verifyIsOpen(item.openTime, item.closeTime),
     }));
