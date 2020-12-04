@@ -5,28 +5,11 @@ import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
 import SessionsController from './app/controllers/SessionController';
-import FileController from './app/controllers/FileController';
+import HostController from './app/controllers/HostController';
+// import FileController from './app/controllers/FileController';
 
 import authMiddleware from './app/middleware/auth';
 import PetsController from './app/controllers/PetsController';
-import PetshopsController from './app/controllers/PetshopsController';
-import ProceduresController from './app/controllers/ProceduresController';
-import BannersController from './app/controllers/BannersController';
-import AppointmentsController from './app/controllers/AppointmentsController';
-import DetailPetshopController from './app/controllers/DetailPetshopController';
-import ViewsPetshopsController from './app/controllers/ViewsPetshopsController';
-import NotificationsController from './app/controllers/NotificationsController';
-import OwnerPetshopController from './app/controllers/OwnerPetshopController';
-import LastAppointmentController from './app/controllers/LastAppointmentController';
-import FilterAppointmentController from './app/controllers/FilterAppointmentController';
-import SendPushNotificationController from './app/controllers/SendPushNotificationController';
-import SaveKeysPushNotificationController from './app/controllers/SaveKeysPushNotificationController';
-import AppointmentDetailController from './app/controllers/AppointmentDetailController';
-import ChangeStatusAppointmentController from './app/controllers/ChangeStatusAppointmentController';
-import SendPushNotificationToPetshopController from './app/controllers/SendPushNotificationToPetshopController';
-import PushMessageController from './app/controllers/PushMessageController';
-import VerifyRegisterController from './app/controllers/VerifyRegisterController';
-import UserDataController from './app/controllers/UserDataController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -39,10 +22,13 @@ routes.use(authMiddleware);
 routes.post('/pets', upload.single('avatar'), PetsController.store);
 routes.get('/pets', PetsController.pets);
 
-let imagesUpload = upload.fields([
-  { name: 'avatar', maxCount: 5 },
-  { name: 'background_image', maxCount: 8 },
-]);
+routes.post('/host', HostController.store);
+routes.get('/host', HostController.index);
+
+// let imagesUpload = upload.fields([
+//   { name: 'avatar', maxCount: 5 },
+//   { name: 'background_image', maxCount: 8 },
+// ]);
 
 // routes.post('/guest', GuestController.store);
 

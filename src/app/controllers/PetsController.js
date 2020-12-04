@@ -1,5 +1,5 @@
-import Pet from '../schemas/Pet';
 import * as Yup from 'yup';
+import Pet from '../schemas/Pet';
 
 class PetsController {
   async store(req, res) {
