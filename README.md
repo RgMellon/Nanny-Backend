@@ -5,11 +5,14 @@
 - [ x ] Cadastrar pet
 - [ x ] Upload Foto Animal
 
-- [ x ] Cadastro de anfitrião (Fazendo essa)
-- [ x ] Listar prestadores de serviço
+- [ x ] Cadastro de anfitrião;
+- [ x ] Listar Anfitriões;
+- [ x ] Filtrar o anfitrião por categoria de serviço []
 
-- [ ] Filtrar o anfitrião por categoria de serviço []
-- [ ] Enviar E-mail
+<!-- - [ ] Enviar E-mail -->
+
 - [ ] Editar Perfil
 
 - [ ] Upload Foto Perfil
+
+- [ ] Avaliar com estrelas

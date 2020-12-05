@@ -10,6 +10,7 @@ import HostController from './app/controllers/HostController';
 
 import authMiddleware from './app/middleware/auth';
 import PetsController from './app/controllers/PetsController';
+import CategoriesController from './app/controllers/CategoriesController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -24,6 +25,9 @@ routes.get('/pets', PetsController.pets);
 
 routes.post('/host', HostController.store);
 routes.get('/host', HostController.index);
+
+routes.post('/categories', CategoriesController.store);
+routes.get('/categories/find', CategoriesController.find);
 
 // let imagesUpload = upload.fields([
 //   { name: 'avatar', maxCount: 5 },

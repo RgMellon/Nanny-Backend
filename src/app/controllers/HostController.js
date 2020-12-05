@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 
 import Host from '../schemas/Host';
+import HostCategory from '../schemas/HostCategory';
+import User from '../schemas/User';
 
 class HostController {
   async store(req, res) {
@@ -11,6 +13,7 @@ class HostController {
         .required(),
       phone: Yup.string().required(),
       about: Yup.string().required(),
+      category_id: Yup.array().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -18,7 +21,7 @@ class HostController {
     }
 
     // eslint-disable-next-line object-curly-newline
-    const { city, email, phone, about, services } = req.body;
+    const { city, email, phone, about, services, category_id } = req.body;
     const { userId } = req;
 
     const userAlreadyExist = await Host.findOne({ phone });
@@ -34,6 +37,20 @@ class HostController {
       about,
       user_id: userId,
       services,
+    });
+
+    const { name, _id } = await User.findOne({ _id: userId });
+
+    // eslint-disable-next-line arrow-parens
+    category_id.forEach(async category => {
+      await HostCategory.create({
+        category_id: category,
+        user: {
+          user_id: _id,
+          name,
+          email,
+        },
+      });
     });
 
     return res.json({
