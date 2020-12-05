@@ -13,6 +13,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'eslint-disable-next-line comma-dangle': 'off',
     'class-methods-use-this': 'off',
     'no-param-reassign': 'off',
     camelcase: 'off',

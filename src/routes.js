@@ -11,6 +11,7 @@ import HostController from './app/controllers/HostController';
 import authMiddleware from './app/middleware/auth';
 import PetsController from './app/controllers/PetsController';
 import CategoriesController from './app/controllers/CategoriesController';
+import StarsController from './app/controllers/StarsController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -28,6 +29,9 @@ routes.get('/host', HostController.index);
 
 routes.post('/categories', CategoriesController.store);
 routes.get('/categories/find', CategoriesController.find);
+
+routes.post('/stars', StarsController.store);
+routes.get('/stars', StarsController.find);
 
 // let imagesUpload = upload.fields([
 //   { name: 'avatar', maxCount: 5 },
