@@ -12,12 +12,16 @@ import authMiddleware from './app/middleware/auth';
 import PetsController from './app/controllers/PetsController';
 import CategoriesController from './app/controllers/CategoriesController';
 import StarsController from './app/controllers/StarsController';
+import SendPushNotificationController from './app/controllers/SendPushNotificationController';
+import SaveKeysPushNotificationController from './app/controllers/SaveKeysPushNotificationController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.post('/user', UserController.store);
 routes.post('/session', SessionsController.store);
+
+routes.post('/send', SendPushNotificationController.send);
 
 routes.use(authMiddleware);
 
@@ -32,6 +36,8 @@ routes.get('/categories/find', CategoriesController.find);
 
 routes.post('/stars', StarsController.store);
 routes.get('/stars', StarsController.find);
+
+routes.post('/key', SaveKeysPushNotificationController.store);
 
 // let imagesUpload = upload.fields([
 //   { name: 'avatar', maxCount: 5 },

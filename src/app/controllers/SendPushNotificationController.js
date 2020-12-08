@@ -1,46 +1,32 @@
-import OneSignalClient from 'node-onesignal-api';
-import PushNotification from '../models/PushNotification';
+import { Expo } from 'expo-server-sdk';
+
+const expo = new Expo({});
 
 class SendPushNotificationController {
   async send(req, res) {
-    const { id } = req.params;
-    const { message } = req.body;
+    const { pushId, body, title } = req.body;
 
-    const user = await PushNotification.findAll({
-      where: {
-        user_id: id,
+    const message = [
+      {
+        to: pushId,
+        sound: 'default',
+        title,
+        body,
+        data: { withSome: 'data' },
+        priority: 'high',
       },
-    });
+    ];
 
-    const userId = user.map(item => item.user_id_push);
+    expo.chunkPushNotifications(message);
 
-    const client = new OneSignalClient({
-      appId: process.env.ONE_SIGNAL_APP_ID,
-      restApiKey: process.env.ONE_SIGNAL_API_KEY,
-    });
+    const chunk = expo.chunkPushNotifications(message);
 
-    client
-      .createNotification({
-        contents: {
-          contents: message,
-        },
-        specific: {
-          include_player_ids: userId,
-        },
-
-        attachments: {
-          data: {
-            hello: 'world',
-          },
-        },
-      })
-      .then(success => {
-        console.log(success);
-      });
+    await expo.sendPushNotificationsAsync(chunk[0]);
 
     return res.json({
-      ok: true,
+      message: 'Push sended with sucess',
     });
   }
 }
+
 export default new SendPushNotificationController();

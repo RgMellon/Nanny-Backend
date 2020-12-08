@@ -1,46 +1,33 @@
-import PushNotification from '../../app/models/PushNotification';
+import KeyPushNotification from '../schemas/KeyPushNotification';
 
 class SaveKeysPushNotificationController {
   async store(req, res) {
-    const { userId } = req;
-    const { user_id_push, push_token } = req.body;
+    const { push_token } = req.body;
 
-    const configUser = await PushNotification.findOne({
-      where: {
-        user_id: userId,
-        push_token,
-        user_id_push,
-      },
+    const { userId } = req;
+
+    const findTokenUser = await KeyPushNotification.findOne({
+      user_id: userId,
     });
 
-    if (!configUser) {
-      try {
-        PushNotification.create({
-          push_token,
-          user_id_push,
-          user_id: userId,
-        });
+    if (!findTokenUser) {
+      await KeyPushNotification.create({
+        user_id: userId,
+        push_token,
+      });
+    }
 
-        return res.json({
-          message: 'configs saved',
-        });
-      } catch (e) {
-        return res.status(400).json({
-          message: 'configs not created',
-        });
-      }
+    if (findTokenUser.push_token === push_token) {
+      return res.json({ message: 'All set!' });
+    }
+
+    if (findTokenUser.push_token !== push_token) {
+      await KeyPushNotification.update({ user_id: userId }, { push_token });
+      return res.json({ message: 'Update with sucess' });
     }
 
     return res.json({
-      message: 'configs already saved',
-    });
-  }
-
-  async get(req, res) {
-    const all = await PushNotification.findAll();
-
-    return res.json({
-      pushs: all,
+      message: 'Token saved with sucess',
     });
   }
 }
