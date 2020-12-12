@@ -36,7 +36,7 @@ jobs:
           source: ".,!node_modules"
           target: "~/app"
           
-      - name: Install dependencies on digital ocean
+      - name: Install dependencies on digital ocean and restart
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -46,15 +46,9 @@ jobs:
           script: | 
             cd ~/app
             npm install
+            pm2 restart nannypet
             
-      - name: Restart node server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key:  ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: pm2 restart nannypet
+     
       #Instalar as dependencias
       #Executar a build
       #Copiar a dist atualizada para a digital ocean
