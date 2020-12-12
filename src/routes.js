@@ -33,6 +33,7 @@ routes.get('/host', HostController.index);
 
 routes.post('/categories', CategoriesController.store);
 routes.get('/categories/find', CategoriesController.find);
+routes.get('/categories/', CategoriesController.all);
 
 routes.post('/stars', StarsController.store);
 routes.get('/stars', StarsController.find);

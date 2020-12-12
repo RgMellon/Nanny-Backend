@@ -3,7 +3,7 @@ import Pet from '../schemas/Pet';
 
 class PetsController {
   async store(req, res) {
-    const { originalname, filename: avatar, path } = req.file;
+    const { filename: avatar } = req.file;
     const { name, size, age } = req.body;
     const { userId } = req;
 

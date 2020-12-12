@@ -40,6 +40,14 @@ class CategoryController {
       hosts: hostsByCategories,
     });
   }
+
+  async all(_, res) {
+    const allCategories = await Category.find();
+
+    return res.json({
+      categories: allCategories,
+    });
+  }
 }
 
 export default new CategoryController();

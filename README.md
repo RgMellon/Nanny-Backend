@@ -17,3 +17,6 @@
 
 - [ x ] Avaliar com estrelas;
 - [ X ] Listar as estrelas;
+
+- [ ] Retornar as estrelas do host la listagem
+- [ ] Listar todas as categorias
