@@ -31,13 +31,15 @@ class SessionController {
     if (!(await bcrypt.compare(password, user.password)))
       return res.status(401).json({ error: 'password does not match' });
 
-    const { id, name } = user;
+    const { id, name, image, url } = user;
 
     return res.json({
       user: {
         name,
         email,
         id,
+        image,
+        url,
       },
       token: jwt.sign({ id }, authConfig.hash, {
         expiresIn: authConfig.expiresIn,

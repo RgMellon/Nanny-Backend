@@ -13,10 +13,10 @@
 
 - [ ] Editar Perfil
 
-- [ ] Upload Foto Perfil
+- [ x ] Upload Foto Perfil
 
 - [ x ] Avaliar com estrelas;
 - [ X ] Listar as estrelas;
 
 - [ ] Retornar as estrelas do host la listagem
-- [ ] Listar todas as categorias
+- [ x] Listar todas as categorias

@@ -13,6 +13,10 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
 
+    image: {
+      type: String,
+    },
+
     password: {
       type: String,
       required: true,
@@ -32,6 +36,10 @@ UserSchema.pre('save', async function save(next) {
   } catch (err) {
     return next(err);
   }
+});
+
+UserSchema.virtual('url').get(function() {
+  return `${process.env.BASE_URL}/files/${this.image}`;
 });
 
 export default mongoose.model('User', UserSchema);

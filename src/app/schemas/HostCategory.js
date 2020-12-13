@@ -7,9 +7,27 @@ const HostCategorySchema = new mongoose.Schema(
       required: true,
     },
 
+    user_id: {
+      type: String,
+    },
+
     category_id: {
       type: String,
       required: true,
+    },
+
+    name: {
+      type: String,
+      required: true,
+    },
+
+    price: {
+      type: String,
+      required: true,
+    },
+
+    image: {
+      type: String,
     },
   },
 

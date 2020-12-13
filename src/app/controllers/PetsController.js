@@ -9,6 +9,8 @@ class PetsController {
 
     const schema = Yup.object().shape({
       name: Yup.string().required(),
+      age: Yup.string().required(),
+      size: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -23,7 +25,6 @@ class PetsController {
       avatar,
     });
 
-    console.log(pet);
     return res.json(pet);
   }
 

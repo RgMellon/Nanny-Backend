@@ -16,7 +16,7 @@ class HostController {
         .required(),
       phone: Yup.string().required(),
       about: Yup.string().required(),
-      category_id: Yup.array().required(),
+      categories: Yup.array().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -24,7 +24,15 @@ class HostController {
     }
 
     // eslint-disable-next-line object-curly-newline
-    const { city, email, phone, about, services, category_id } = req.body;
+    const {
+      city,
+      email,
+      phone,
+      about,
+      services,
+      categories,
+      image = '',
+    } = req.body;
     const { userId } = req;
 
     const userAlreadyExist = await Host.findOne({ phone });
@@ -43,16 +51,21 @@ class HostController {
       user_id: userId,
       services,
       name,
+      image,
     });
 
     // eslint-disable-next-line arrow-parens
-    category_id.forEach(async category => {
+    categories.forEach(async categoryPayload => {
       await HostCategory.create({
-        category_id: category,
+        category_id: categoryPayload.category,
+        price: categoryPayload.price,
+        name: categoryPayload.name,
+        user_id: _id,
         user: {
           user_id: _id,
           name,
           email,
+          image,
         },
       });
     });
@@ -78,6 +91,25 @@ class HostController {
 
     return res.json({
       hosts: await Promise.all(hostWithRating),
+    });
+  }
+
+  async find(req, res) {
+    const { host_id } = req.query;
+
+    const host = await Host.findOne({ user_id: host_id });
+
+    const services = await HostCategory.find({
+      user_id: host_id,
+    });
+
+    const parsedHost = {
+      host,
+      hostServices: services,
+    };
+
+    return res.json({
+      hostProfile: parsedHost,
     });
   }
 }

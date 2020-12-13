@@ -35,6 +35,10 @@ const HostSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
+
+  image: {
+    type: String,
+  },
 });
 
 export default mongoose.model('Host', HostSchema);

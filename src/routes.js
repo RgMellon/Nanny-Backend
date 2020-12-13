@@ -14,6 +14,7 @@ import CategoriesController from './app/controllers/CategoriesController';
 import StarsController from './app/controllers/StarsController';
 import SendPushNotificationController from './app/controllers/SendPushNotificationController';
 import SaveKeysPushNotificationController from './app/controllers/SaveKeysPushNotificationController';
+import NotificationsController from './app/controllers/NotificationsController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -22,6 +23,7 @@ routes.post('/user', UserController.store);
 routes.post('/session', SessionsController.store);
 
 routes.post('/send', SendPushNotificationController.send);
+routes.post('/send/user', SendPushNotificationController.sendUser);
 
 routes.use(authMiddleware);
 
@@ -30,6 +32,7 @@ routes.get('/pets', PetsController.pets);
 
 routes.post('/host', HostController.store);
 routes.get('/host', HostController.index);
+routes.get('/host/find', HostController.find);
 
 routes.post('/categories', CategoriesController.store);
 routes.get('/categories/find', CategoriesController.find);
@@ -39,6 +42,12 @@ routes.post('/stars', StarsController.store);
 routes.get('/stars', StarsController.find);
 
 routes.post('/key', SaveKeysPushNotificationController.store);
+
+routes.put('/user', upload.single('avatar'), UserController.update);
+
+routes.get('/notification/find/', NotificationsController.find);
+routes.post('/notification', NotificationsController.store);
+routes.get('/notification', NotificationsController.index);
 
 // let imagesUpload = upload.fields([
 //   { name: 'avatar', maxCount: 5 },

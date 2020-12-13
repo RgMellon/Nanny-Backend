@@ -1,22 +1,12 @@
 import Notification from '../schemas/Notification';
-import Petshop from '../models/Petshop';
+import User from '../schemas/User';
 
 class NotificationsController {
   async index(req, res) {
     const { userId } = req;
 
-    const isOwner = await Petshop.findOne({
-      where: {
-        user_id: userId,
-      },
-    });
-
-    if (!isOwner) {
-      return res.status(400).json({ error: 'this user dont have petshop' });
-    }
-
     const notifications = await Notification.find({
-      petshop: isOwner.id,
+      user_id: userId,
     })
       .sort({ createdAt: 'desc' })
       .limit(20);
@@ -37,17 +27,41 @@ class NotificationsController {
     return res.json(notification);
   }
 
-  async delete(req, res) {
-    // const { userId } = req;
+  async store(req, res) {
+    const { title, content, user_id, phone } = req.body;
 
-    try {
-      await Notification.deleteMany({
-        petshop: 4,
-      });
-    } catch (e) {
-      console.tron.log(e);
-      return res.status(400).json({ error: 'problem remove' });
-    }
+    const { userId } = req;
+
+    const userLogged = await User.findOne({ _id: userId });
+
+    const payloadUser = {
+      title,
+      content,
+      user: {
+        phone,
+        name: userLogged.name,
+        // eslint-disable-next-line no-underscore-dangle
+        user_id: userLogged._id,
+        image: userLogged.image,
+        email: userLogged.email,
+      },
+      user_id,
+      status: false,
+    };
+
+    await Notification.create(payloadUser);
+
+    return res.json({ message: 'Sended Notification' });
+  }
+
+  async find(req, res) {
+    const { id_notification } = req.query;
+
+    const notification = await Notification.findOne({
+      _id: id_notification,
+    });
+
+    return res.json({ notification });
   }
 }
 

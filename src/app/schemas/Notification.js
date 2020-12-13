@@ -7,27 +7,33 @@ const NotificationSchema = new mongoose.Schema(
       required: true,
     },
 
-    date: {
+    title: {
       type: String,
       required: true,
     },
 
-    // qual usuario vai receber a notificacao
-    petshop: {
-      type: Number,
+    // phone: {
+    //   type: String,
+    //   required: true,
+    // },
+
+    //o usuario que vai enviar a mensagem
+    user: {
+      type: Object,
+      required: true,
+    },
+
+    //o usuario que vai receber a mensagem
+    user_id: {
+      type: String,
       required: true,
     },
 
     // se a notificacao foi lida ou nao
-    read: {
+    status: {
       type: Boolean,
       required: true,
       default: false,
-    },
-
-    appointmentId: {
-      type: Number,
-      required: true,
     },
   },
   {
